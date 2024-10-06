@@ -3,13 +3,10 @@ import requests
 import numpy as np
 import cv2
 import base64
-from dotenv import load_dotenv
-import os
 from streamlit_webrtc import VideoProcessorBase, webrtc_streamer
 
-# Load API key from .env file
-load_dotenv()
-API_KEY = os.getenv("GOOGLE_GEMINI_API_KEY")
+# Load API key from secrets.toml file
+API_KEY = st.secrets["GOOGLE_GEMINI_API_KEY"]
 
 # Function to call the Google Gemini API
 def identify_plant(image_data):
@@ -42,7 +39,7 @@ def identify_plant(image_data):
     }
 
     # Send the request to the API
-    response = requests.post(url, headers=headers, json=data, verify=False)
+    response = requests.post(url, headers=headers, json=data)
 
     # Process the response
     if response.status_code == 200:
